@@ -1,0 +1,150 @@
+/* 左侧栏样式 */
+.sidebar {
+    height: 900px;
+    width: 320px; /* 左侧栏宽度 */
+    background-color: linear-gradient(to bottom, #112240, #0a1a2b); /* 左侧栏背景颜色 */
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 30px; /* 距离顶部的距离 */
+    color: #00d4ff;
+    text-align: center;
+}
+
+.sidebar .logo {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sidebar .logo img {
+    display: block;
+    width: 150px;
+    position: relative;
+    z-index: 1;
+}
+
+.sidebar .logo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 150, 255, 0.3); /* 淡蓝色效果 */
+    z-index: 0;
+    mix-blend-mode: multiply; /* 混合模式 */
+    border-radius: 5px; 
+}
+
+
+.sidebar .detection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 10px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    transition: background 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background-color: #7eceae;
+}
+
+.calendar {
+    background: rgba(0, 150, 255, 0.3); /* 淡蓝色效果 */;
+    padding: 20px;
+    border-radius: 0px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 10px;
+    border-radius: 5px; 
+}
+
+.calendar h1 {
+    font-size: 18px;
+    margin: 0;
+    position: relative;
+    display: inline-block;
+    color: linear-gradient(45deg, #33ccff, #66e0ff); ;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.calendar h1::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+}
+.calendar table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.calendar th, .calendar td {
+    padding: 10px;
+    border: 1px solid #ffffff40;
+    text-align: center;
+    width: 14.28%; 
+}
+.calendar th {
+    background-color: #ffffff10;
+}
+.calendar .highlight {
+    background-color: #7eceae;
+    color: #fff;
+}
+.calendar .festival {
+    color: #fff;
+}
+.calendar .today {
+    background-color: #33ccff;
+    color: #fff;
+}
+.superBtnc {
+    background: linear-gradient(45deg, #00aaff, #33ccff); /* 更亮的渐变颜色 */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 170, 255, 0.75), 0 0 10px rgba(51, 204, 255, 0.5); /* 调整阴影颜色使其更亮 */
+    position: relative;
+    overflow: hidden;
+}
+
+.superBtnc:hover {
+    background: linear-gradient(45deg, #33ccff, #66e0ff); /* 更亮的渐变颜色 */
+    box-shadow: 0 6px 20px rgba(0, 170, 255, 1), 0 0 15px rgba(51, 204, 255, 0.75); /* 调整阴影颜色使其更亮 */
+    transform: translateY(-2px);
+}
+

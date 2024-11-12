@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>光深科技草莓自动化管理后台</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/celan.css">
+    <link rel="stylesheet" href="css/all.css">
+    <link rel="icon" href="图片/favicon.ico">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- 登录页面 -->
+    <div id="loginPage">
+        <div class="color"></div>
+        <div class="color"></div>
+        <div class="color"></div>
+        <div class="box">
+            <div class="square" style="--i:0;"></div>
+            <div class="square" style="--i:1;"></div>
+            <div class="square" style="--i:2;"></div>
+            <div class="square" style="--i:3;"></div>
+            <div class="square" style="--i:4;"></div>
+            <div class="container">
+                <div class="login-form">
+                    <h2>登录</h2>
+                    <form>
+                        <div class="inputBox">
+                            <input type="text" id="username" placeholder="用户名">
+                        </div>
+                        <div class="inputBox">
+                            <input type="password" id="password" placeholder="密码">
+                        </div>
+                        <div class="inputBox">
+                            <button type="button" onclick="login()">登录</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 管理后台页面 -->
+    <div id="adminPage" class="hidden">
+        <video autoplay muted loop id="backgroundVideo">
+            <source src="图片/14561-258207720.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="sidebar">
+            <h1>光深科技管理平台</h1>
+            <div class="logo">
+                <img src="图片/logo.png" alt="Logo">
+            </div>
+            <div class="detection">
+                <button class="superBtnc" onclick="displayData('CO2浓度')"> CO2 浓度</button>
+                <button class="superBtnc" onclick="displayData('光照')">检测光照</button>
+                <button class="superBtnc" onclick="displayData('空气湿度')">检测湿度</button>
+                <button class="superBtnc" onclick="displayData('温度')">检测温度</button>
+                <button class="superBtnc" onclick="displayData('关闭')">关闭</button>
+            </div>
+            <div class="calendar">
+                <h1>June</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>一</th>
+                            <th>二</th>
+                            <th>三</th>
+                            <th>四</th>
+                            <th>五</th>
+                            <th>六</th>
+                            <th>七</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendar-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="admin-container">
+            <div class="header">
+                <div class="logo">
+                    <div class="text__container">
+                        <h1 class="text" data-text="1光深科技">光深科技0</h1>
+                        <div class="text__gradient"></div>
+                        <div class="text__spotlight"></div>
+                    </div>
+                </div>
+                <div class="admin-info">
+                    <p>管理员: 张三</p>
+                </div>
+            </div>
+            <div class="main-content">
+                <div class="content">
+                    <div class="data-display" id="dataDisplay">数据展示</div>
+                    <div class="down">
+                        <p>点击下方按钮前往可视化平台</p>
+                        <button class="link-button" onclick="window.location.href='details.html'">可视化平台</button>
+                    </div>
+                 </div>
+                 <div class="sidebar-left">
+                    <div class="maturity">
+                        <h3>草莓成熟度：<span id="strawberryMaturity">20%</span></h3>
+                    </div>
+                    <div class="maturity">
+                        <h3>环境湿度：<span id="humidity">60%</span></h3>
+                    </div>
+                    <div class="maturity">
+                        <h3>环境温度：<span id="temperature">22°C</span></h3>
+                    </div>
+                    <div class="maturity">
+                        <h3>光照强度：<span id="light">15000 lux</span></h3>
+                    </div>
+                    <div class="maturity">
+                        <h3>作物生成情况：<span id="cropGrowth">良好</span></h3>
+                    </div>
+                </div>
+                
+                <div class="sidebar-right">
+                    <div class="controls">
+                        <p>灌溉</p>
+                        <button class="superBtn toggle-button" onclick="toggleButton(this)">关闭</button>
+                        <p>通风</p>
+                        <button class="superBtn toggle-button" onclick="toggleButton(this)">关闭</button>
+                        <p>运输</p>
+                        <button class="superBtn toggle-button" onclick="toggleButton(this)">关闭</button>
+                        <p>遮阳</p>
+                        <button class="superBtn toggle-button" onclick="toggleButton(this)">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            if (username === '张三' && password === '1') {
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('adminPage').classList.remove('hidden');
+            } else {
+                alert('用户名或密码错误');
+            }
+        }
+
+        function displayData(dataType) {
+    var dataDisplay = document.getElementById('dataDisplay');
+    dataDisplay.style.display = 'flex';
+    dataDisplay.style.justifyContent = 'center';
+    dataDisplay.style.alignItems = 'center';
+
+    if (dataType === 'CO2浓度') {
+        dataDisplay.innerHTML = '<canvas id="co2Chart" style="width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); border-radius: 10px;"></canvas>';
+        
+        const ctx = document.getElementById('co2Chart').getContext('2d');
+        const co2Chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'CO2 浓度 (ppm)',
+                    data: [400, 420, 430, 410, 405, 402, 398, 396, 399, 403, 408, 412],
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: 'white'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y + ' ppm';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: '月份',
+                            color: 'white'
+                        },
+                        ticks: {
+                            color: 'white'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'CO2 浓度 (ppm)',
+                            color: 'white'
+                        },
+                        ticks: {
+                            color: 'white'
+                        },
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+    } else if (dataType === '光照') {
+        dataDisplay.innerHTML = '<canvas id="lightChart" style="width: 80%; height: 80%; background: rgba(0, 0, 0, 0.5); border-radius: 10px;"></canvas>';
+        
+        const ctx = document.getElementById('lightChart').getContext('2d');
+        const lightChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: '光照强度 (lux)',
+                    data: [8000, 10000, 15000, 20000, 25000, 30000, 35000, 30000, 25000, 20000, 15000, 10000],
+                    backgroundColor: 'rgba(255, 206, 86, 0.8)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: 'white'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y + ' lux';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: '月份',
+                            color: 'white'
+                        },
+                        ticks: {
+                            color: 'white'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: '光照强度 (lux)',
+                            color: 'white'
+                        },
+                        ticks: {
+                            color: 'white'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    } else if (dataType === '空气湿度') {
+        dataDisplay.innerHTML = '<canvas id="humidityChart" style="width: 70%; height: 70%; background: rgba(0, 0, 0, 0.5); border-radius: 10px;"></canvas>';
+        
+        const ctx = document.getElementById('humidityChart').getContext('2d');
+        const humidityChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [
+                    {
+                        label: '空气湿度 (%)',
+                        data: [55, 60, 65, 70, 75, 80, 85, 80, 75, 70, 65, 60],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderWidth: 2,
+                    },
+                    {
+                        label: '土壤湿度 (%)',
+                        data: [45, 50, 55, 60, 65, 70, 75, 70, 65, 60, 55, 50],
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                        borderWidth: 2,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: 'white'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y + ' %';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: '月份',
+                            color: 'white'
+                        },
+                        ticks: {
+                            color: 'white'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: '湿度 (%)',
+                            color: 'white'
+                        },
+                        ticks: {
+                            color: 'white'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    } else if (dataType === '温度') {
+        dataDisplay.innerHTML = '<canvas id="temperatureChart" style="width: 70%; height: 70%; background: rgba(0, 0, 0, 0.5); border-radius: 10px;"></canvas>';
+        
+        const ctx = document.getElementById('temperatureChart').getContext('2d');
+        const temperatureChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: '温度 (°C)',
+                    data: [5, 7, 10, 15, 20, 25, 30, 28, 22, 16, 10, 6],
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: 'white'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y + ' °C';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: '月份',
+                            color: 'white'
+                        },
+                        ticks: {
+                            color: 'white'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: '温度 (°C)',
+                            color: 'white'
+                        },
+                        ticks: {
+                            color: 'white'
+                        },
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+            } else {
+                dataDisplay.textContent = '' + dataType;
+            }
+        }
+
+        
+
+        function generateCalendar() {
+            const festivals = {
+                5: '芒种',
+                21: '夏至'
+            };
+            const today = new Date();
+            const currentMonth = today.getMonth();
+            const currentDate = today.getDate();
+            const startDay = new Date(today.getFullYear(), currentMonth, 1).getDay();
+            const daysInMonth = new Date(today.getFullYear(), currentMonth + 1, 0).getDate();
+            
+            const calendarBody = document.getElementById('calendar-body');
+            calendarBody.innerHTML = '';
+            
+            let date = 1;
+            for (let i = 0; i < 6; i++) {
+                const row = document.createElement('tr');
+                
+                for (let j = 0; j < 7; j++) {
+                    const cell = document.createElement('td');
+                    if (i === 0 && j < startDay) {
+                        cell.innerHTML = '';
+                    } else if (date > daysInMonth) {
+                        break;
+                    } else {
+                        if (festivals[date]) {
+                            cell.innerHTML = `${date}<br><span class="festival">${festivals[date]}</span>`;
+                        } else {
+                            cell.innerHTML = date;
+                        }
+                        if (date === currentDate) {
+                            cell.classList.add('today');
+                        }
+                        date++;
+                    }
+                    row.appendChild(cell);
+                }
+                calendarBody.appendChild(row);
+            }
+        }
+
+        generateCalendar();
+
+        function toggleButton(button) {
+            button.classList.toggle('active');
+            if (button.classList.contains('active')) {
+                button.textContent = '开启';
+            } else {
+                button.textContent = '关闭';
+            }
+        }
+
+        function updateRandomData() {
+    // 生成随机但合理的数据
+    const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+    // 更新环境湿度
+    let humidity = randomInt(55, 65);
+    document.getElementById('humidity').textContent = `${humidity}%`;
+
+    // 更新环境温度
+    let temperature = randomInt(18, 26);
+    document.getElementById('temperature').textContent = `${temperature}°C`;
+
+    // 更新光照强度
+    let light = randomInt(14000, 16000);
+    document.getElementById('light').textContent = `${light} lux`;
+
+    // 更新作物生成情况
+    let cropConditions = ['良好', '正常', '较好'];
+    let cropGrowth = cropConditions[randomInt(0, cropConditions.length - 1)];
+    document.getElementById('cropGrowth').textContent = cropGrowth;
+}
+
+// 初始化更新数据
+updateRandomData();
+
+// 每小时更新一次数据
+setInterval(updateRandomData, 3600000); // 3600000 毫秒 = 1 小时
+
+// 生成从 min 到 max 的随机整数
+function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // 更新草莓成熟度
+        function updateStrawberryMaturity() {
+            let maturity = localStorage.getItem('strawberryMaturity');
+            maturity = maturity ? parseInt(maturity) : randomInt(20, 30); // 初始化一个20到30之间的随机值
+
+            // 确保每次更新的值只能比前一次高
+            let newMaturity = Math.min(maturity + randomInt(1, 5), 100); // 每次增加1到5之间的值，最大值为100
+
+            // 将新值保存在本地存储中
+            localStorage.setItem('strawberryMaturity', newMaturity);
+
+            // 更新显示
+            document.getElementById('strawberryMaturity').textContent = `${newMaturity}%`;
+        }
+
+        // 每两天更新一次
+        function scheduleUpdate() {
+            const now = new Date().getTime();
+            const lastUpdate = localStorage.getItem('lastUpdate');
+            
+            if (!lastUpdate || now - lastUpdate >= 2 * 24 * 60 * 60 * 1000) { // 两天的毫秒数
+                updateStrawberryMaturity();
+                localStorage.setItem('lastUpdate', now);
+            } else {
+                // 如果不需要更新，则显示当前存储的值
+                let currentMaturity = localStorage.getItem('strawberryMaturity');
+                document.getElementById('strawberryMaturity').textContent = `${currentMaturity}%`;
+            }
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', (event) => {
+            scheduleUpdate();
+        });
+
+    </script>
+</body>
+</html>

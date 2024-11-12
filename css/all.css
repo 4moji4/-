@@ -1,0 +1,428 @@
+#adminPage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s;
+    overflow: hidden; /* 确保视频不会溢出 */
+}
+
+#backgroundVideo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 确保视频覆盖整个容器 */
+    z-index: -1; /* 确保视频在背景层 */
+}
+
+.admin-container {
+    background:#FFFFFF00;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 98%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* 轻微阴影 */
+    margin-left: -10px;
+    border: 1px solid rgba(0, 255, 255, 0.5);
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    mix-blend-mode: multiply;
+    backdrop-filter: blur(0.2rem); /* 磨砂效果 */
+
+    z-index: 1;
+}
+
+.header .logo {
+    z-index: 2; /* 确保内容在背景层之上 */
+}
+
+.header .text__spotlight {
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, #fff, transparent 25%) 0 0/25% 25%, radial-gradient(circle, #fff, #000 25%) 50% 50%/12.5% 12.5%;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+    transform-style: preserve-3d;
+    mix-blend-mode: color-dodge;
+    animation: light--translate 5s infinite linear;
+    z-index: 2;
+}
+
+@keyframes backgroundAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes light--translate {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(50%, 50%, 0);
+    }
+}
+
+
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.1) 0,
+        rgba(255, 255, 255, 0.1) 1px,
+        transparent 1px,
+        transparent 10px
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1), transparent);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.header .logo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    border-radius: 60px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* 轻微阴影 */
+    margin-left: -10px;
+    border: 1px solid rgba(0, 255, 255, 0.5);
+    margin-left: -40px;
+}
+
+.text__container {
+    overflow: hidden;
+    position: relative;
+    filter: contrast(120%) brightness(250%);
+}
+
+.text__container .text {
+    position: relative;
+    background: #ffffff00;
+    font-family: "Roboto", sans-serif;
+    font-size: 4rem; /* 根据需求调整字体大小 */
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 1rem;
+    margin: 0;
+    color: transparent;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.text__container .text::before, .text__container .text::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: attr(data-text);
+    color: #fff;
+    filter: blur(0.2rem);
+    pointer-events: none;
+}
+
+.text__container .text::after {
+    mix-blend-mode: difference;
+}
+
+.text__container .text__gradient, .text__container .text__spotlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.text__container .text__gradient {
+    background: linear-gradient(45deg, #007ffe, #001c3d);
+    mix-blend-mode: multiply;
+}
+
+.text__container .text__spotlight {
+    top: -100%;
+    left: -100%;
+    background: radial-gradient(circle, #fff, transparent 25%) 0 0/25% 25%, radial-gradient(circle, #fff, #000 25%) 50% 50%/12.5% 12.5%;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+    transform-style: preserve-3d;
+    mix-blend-mode: color-dodge;
+    -webkit-animation: light--translate 5s infinite linear;
+            animation: light--translate 5s infinite linear;
+}
+
+@-webkit-keyframes light--translate {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(50%, 50%, 0);
+    }
+}
+
+@keyframes light--translate {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(50%, 50%, 0);
+    }
+}
+
+.header .admin-info {
+    padding: 10px;
+    border-radius: 5px;
+    text-align: right;
+    margin-right: 24px;
+    color: #fff;
+    z-index: 1;
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+    margin-top: 20px;
+}
+.sidebar-left, .sidebar-right {
+    flex-direction: column;
+    justify-content: space-between;
+}
+.sidebar-left {
+    width: 16%;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 18px;
+}
+.sidebar-right {
+    width: 12%;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 8px;
+    color: #fff;
+}
+.content {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.2); /* 内容区域的背景色 */
+    margin: 0 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.content .data-display {
+    color: #fff;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    background: rgba(36, 26, 34, 0); /* 数据显示区域的背景色 */
+    width: 100%;
+    padding: 20px;
+    border-bottom: 2px solid #00ccff; /* 与下方区域的分割线 */
+    border-radius: 10px 10px 0 0;
+}
+
+.content .down {
+    background: rgba(30, 124, 82, 0.2); /* down 区域的背景色 */
+    width: 100%;
+    padding: 20px;
+    border-radius: 0 0 10px 10px;
+    text-align: center; /* 文本居中 */
+}
+
+.content .down h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.content .down p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.link-button {
+    background: linear-gradient(45deg, #00aaff, #00ccff); 
+    color: #fff; /* 按钮的文字颜色 */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.link-button:hover {
+    background:linear-gradient(45deg, #00aaff, #00ccff); 
+}
+
+
+.sidebar-left .maturity, .sidebar-right .controls1 {
+    margin-top: 36px;
+    color: #fff;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0, 119, 182, 0.75), 0 0 30px rgb(2, 176, 234); /* 光晕效果 */
+    position: relative; /* 为了使伪元素生效 */
+    overflow: hidden; /* 隐藏溢出 */
+}
+
+.sidebar-left .maturity::before, .sidebar-right .controls1::before {
+    content: '';
+    position: absolute;
+    top: -4px; /* 加粗线框 */
+    left: -4px; /* 加粗线框 */
+    right: -4px; /* 加粗线框 */
+    bottom: -4px; /* 加粗线框 */
+    border-radius: 5px;
+    background: linear-gradient(45deg, #00aaff,#ffffff00 , #00ccff, #ffffff00);
+    background-size: 400% 400%;
+    animation: borderAnimation 5s linear infinite; /* 流动的效果 */
+    z-index: -1;
+}
+
+@keyframes borderAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+.sidebar-right .controls button, .sidebar-right .detection button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(45deg, #00aaff, #00ccff); /* 亮蓝色渐变 */
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 170, 255, 0.75), 0 0 10px rgba(0, 204, 255, 0.5); /* 调整阴影颜色 */
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-right .controls button:hover, .sidebar-right .detection button:hover {
+    background: linear-gradient(45deg, #00ccff, #00e5ff); /* 悬停状态的亮蓝色渐变 */
+    box-shadow: 0 6px 20px rgba(0, 170, 255, 1), 0 0 15px rgba(0, 204, 255, 0.75); /* 调整阴影颜色 */
+    transform: translateY(-2px);
+}
+
+.superBtn {
+    color: #fff;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    letter-spacing: .08em;
+    width: 242px;
+    height: 39.6px;
+    line-height: 39.6px;
+    position: relative;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #00aaff, #00ccff); /* 亮蓝色渐变 */
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(0, 0, 0, 0.3), inset 0 0 0px 1px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.5), 0 4px 10px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.superBtn::after {
+    width: 253px;
+    height: 49.5px;
+    top: -4.95px;
+    margin-left: 50%;
+    left: -126.5px;
+    content: '';
+    display: block;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #00aaff, #00ccff); /* 亮蓝色渐变 */
+    box-shadow: 0 -1px 1px rgba(0, 0, 0, 0.7), 0 1px 1px rgba(255, 255, 255, 0.4), 0 0 1px 1px rgba(0, 0, 0, 0.3), inset 0 0px 3px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(0, 0, 0, 0.6);
+    position: absolute;
+    z-index: -1;
+    transition: transform 0.3s;
+}
+
+.toggle-button.active {
+    background: linear-gradient(45deg, #0088cc, #00aaff); /* 激活状态的亮蓝色渐变 */
+}
+
+.toggle-button.active::after {
+    transform: translateX(100%); /* 滑动效果 */
+}
+
+.toggle-button::after {
+    transition: transform 0.3s;
+}
+
+.toggle-button:hover {
+    background: linear-gradient(45deg, #00ccff, #00e5ff); /* 悬停状态的亮蓝色渐变 */
+    box-shadow: 0 6px 20px rgba(0, 170, 255, 1), 0 0 15px rgba(0, 204, 255, 0.75); /* 调整阴影颜色 */
+    transform: translateY(-2px);
+}
